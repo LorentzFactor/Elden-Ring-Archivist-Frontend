@@ -1,0 +1,57 @@
+/* app/styles/searchBar.css */
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .search-container input[type="text"] {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .search-container input[type="text"]:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  }
+  
+  .search-container button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .search-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .search-container button:focus {
+    outline: none;
+  }
+  
+  @media (max-width: 600px) {
+    .search-container input[type="text"] {
+      font-size: 14px;
+    }
+  
+    .search-container button {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  }
+  
