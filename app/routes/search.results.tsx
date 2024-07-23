@@ -1,56 +1,43 @@
 import React from 'react';
 import { useLoaderData } from '@remix-run/react';
-import SearchResultsTable from '../components/SearchResultsTable';
+import default_index from '../utils/pineconeClient';
+import openai from '../utils/openAIClient';
+import { redirect } from '@remix-run/node';
+
+type SearchResult = {
+  id: string,
+  name: string|null
+}
+
+const preamble_string="Answer the following question about the lore of the game Elden Ring, using information provided from a data dump of the game's item text.\nPay particular attention to the Caption field, if there is one, as this often contains the most lore.\n\nQuestion:\n"
 
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('q');
+  if (!searchTerm) {
+    throw redirect('/search')
+  }
   
-  // simulate waiting for db response
-  await new Promise(resolve => setTimeout(resolve, 100));
+  const embedding_response = await openai.embeddings.create({
+    model: "text-embedding-3-large",
+    input: preamble_string + searchTerm,
+    encoding_format: "float",
+  });
 
-  const data = [
-    {
-      "id": "Goods_52",
-      "type": "Goods",
-      "name": "Silver Serpent Ring",
-      "description": "A ring of the silver serpent",
-      "img": "https://eldenring.wiki.fextralife.com/file/Elden-Ring/messmer_soldiers_axe_axes_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
-      "external_link": "https://google.com"
-    },
-    {
-      "id": "Goods_53",
-      "type": "Goods",
-      "name": "Golden Talisman",
-      "description": "A talisman of pure gold",
-      "img": "https://eldenring.wiki.fextralife.com/file/Elden-Ring/golden_order_talisman_talisman_elden_ring_wiki_guide_200px.png",
-      "external_link": "https://google.com"
-    },
-    {
-      "id": "Goods_54",
-      "type": "Goods",
-      "name": "Dragon Shield",
-      "description": "A shield with dragon emblem",
-      "img": "https://eldenring.wiki.fextralife.com/file/Elden-Ring/dragoncrest_greatshield_talisman_talisman_elden_ring_wiki_guide_200px.png",
-      "external_link": "https://google.com"
-    },
-    {
-      "id": "Goods_55",
-      "type": "Goods",
-      "name": "Ancient Sword",
-      "description": "A sword from ancient times",
-      "img": "https://eldenring.wiki.fextralife.com/file/Elden-Ring/ankh_sword_greatsword_elden_ring_wiki_guide_200px.png",
-      "external_link": "https://google.com"
-    },
-    {
-      "id": "Goods_56",
-      "type": "Goods",
-      "name": "Mystic Amulet",
-      "description": "An amulet with mystic powers",
-      "img": "https://eldenring.wiki.fextralife.com/file/Elden-Ring/mystic_amulet_talisman_elden_ring_wiki_guide_200px.png",
-      "external_link": "https://google.com"
-    }
-  ];
+  const query_vec = embedding_response.data[0].embedding;
+  
+  const data_matches = await default_index.query({
+    vector: query_vec,
+    topK: 10,
+    includeMetadata: true
+  })
+
+  const data: any[] = []
+  for (let match of data_matches.matches) {
+    let item_data = match.metadata!
+    item_data.id = match.id
+    data.push(item_data)
+  }
 
   return { data };
 };

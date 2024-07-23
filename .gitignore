@@ -132,3 +132,6 @@ dist
 # Ignore Remix Builds
 build/client
 build/server
+
+# sst
+.sst
