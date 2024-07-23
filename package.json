@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pinecone-database/pinecone": "^3.0.0",
     "@remix-run/express": "^2.10.3",
     "@remix-run/node": "^2.10.3",
     "@remix-run/react": "^2.10.3",
@@ -20,6 +21,7 @@
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
     "isbot": "^4.4.0",
+    "openai": "^4.53.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sst": "ion"
