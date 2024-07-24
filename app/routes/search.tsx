@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearchParams, Outlet } from '@remix-run/react';
+import { Outlet } from '@remix-run/react';
 import SearchBar from '../components/SearchBar';
 
 const Search = () => {
