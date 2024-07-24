@@ -23,7 +23,7 @@ const SearchBar = () => {
         <input 
           type="text" 
           name="q"
-          placeholder="Search..."
+          placeholder="Ask your lore question..."
           value={searchTerm} 
           onChange={handleChange} 
         />

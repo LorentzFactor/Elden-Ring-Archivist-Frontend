@@ -49,27 +49,31 @@ const SearchResult = () => {
       }
     
       // Get table headers
-      const headers = Object.keys(data[0]);
+      const headers = ["Name", "Caption", "Info"]
     
       return (
-        <table>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th key={header}>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                {headers.map((header) => (
-                  <td key={header}>{row[header]}</td>
+        <div className="container mx-auto">
+          <div className="bg-white shadow-md rounded-lg overflow-hidden mb-10">
+            <table className="min-w-full bg-white">
+              <thead className="bg-gray-800 text-white">
+                <tr>
+                  {headers.map((header) => (
+                    <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm" key={header}>{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((row, index) => (
+                  <tr key={index} id={row.id}>
+                    {headers.map((header) => (
+                      <td key={header}>{row[header]}</td>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </div>
+        </div>
       ); 
 };
 
