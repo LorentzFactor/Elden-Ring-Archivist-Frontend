@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar';
 const Search = () => {
   return (
     <div>
-      <SearchBar className="py-px-10 margin-10"/>
+      <SearchBar/>
       <Outlet/>
     </div>
   );

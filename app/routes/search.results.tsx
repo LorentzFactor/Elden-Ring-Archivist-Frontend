@@ -55,18 +55,18 @@ const SearchResult = () => {
         <div className="container mx-auto">
           <div className="bg-white shadow-md rounded-lg overflow-hidden mb-10">
             <table className="min-w-full bg-white">
-              <thead className="bg-gray-800 text-white">
+              <thead className="bg-sky-600 text-white">
                 <tr>
                   {headers.map((header) => (
                     <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm" key={header}>{header}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-gray-100 text-gray-700">
                 {data.map((row, index) => (
                   <tr key={index} id={row.id}>
                     {headers.map((header) => (
-                      <td key={header}>{row[header]}</td>
+                      <td className="w-1/3 py-3 px-4" key={header}>{row[header]}</td>
                     ))}
                   </tr>
                 ))}
