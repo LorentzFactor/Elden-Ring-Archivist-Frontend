@@ -27,8 +27,9 @@ export const loader = async ({ request }) => {
   const query_vec = embedding_response.data[0].embedding;
   
   const data_matches = await default_index.query({
-    vector: query_vec,
+    vector: query_vec, 
     topK: 10,
+    filter: { $and:[{"Name": {$exists: true}}, {"Caption": {$exists: true}}] },
     includeMetadata: true
   })
 
@@ -54,7 +55,7 @@ const SearchResult = () => {
       return (
         <div className="container mx-auto">
           <div className="bg-white shadow-md rounded-lg overflow-hidden mb-10">
-            <table className="min-w-full bg-white">
+            <table className="min-w-full bg-white divide-solid">
               <thead className="bg-sky-600 text-white">
                 <tr>
                   {headers.map((header) => (
@@ -64,7 +65,7 @@ const SearchResult = () => {
               </thead>
               <tbody className="bg-gray-100 text-gray-700">
                 {data.map((row, index) => (
-                  <tr key={index} id={row.id}>
+                  <tr className="border-b" key={index} id={row.id}>
                     {headers.map((header) => (
                       <td className="w-1/3 py-3 px-4" key={header}>{row[header]}</td>
                     ))}
