@@ -132,9 +132,14 @@ dist
 # Ignore Remix Builds
 build/client
 build/server
+build/polyfill.mjs
+build/server.mjs
 
 # sst
 .sst
 
 # Ignore package-lock.json
 package-lock.json
+
+# Ignore public build assets
+public/build
