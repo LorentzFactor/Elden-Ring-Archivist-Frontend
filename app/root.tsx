@@ -5,9 +5,10 @@ import {
     Meta,
     Outlet,
     Scripts,
+    LiveReload,
   } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import stylesheet from "./tailwind.css";
+import stylesheet from "./tailwind.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -32,18 +33,21 @@ export const meta: MetaFunction = () => {
           <Meta />
           <Links />
         </head>
-        <body className="bg-gray-100 p-10">
-          <h1 className="text-3xl font-bold">The Silver Tear</h1>
-          <div>
+        <body className="overscroll-contain">
+          <div className="bg-zinc-300 overscroll-contain">
+          <h1 className="sticky text-3xl font-bold top">The Silver Tear</h1>
+          <div className="static min-h-screen">
             <Outlet />
           </div>
-          <footer className="mx-auto bg-gray-800 text-white py-6">
-            <div className="flex justify-center space-x-6">
-              <Link className="mx-auto" to="/search"> Search </Link>
-              <Link className="mx-auto" to="/about"> About </Link>
-            </div>
-          </footer>
+          <div className="relative bg-zinc-800 text-white w-screen bottom-0 h-12 p-0 m-0">
+            <div className="columns-2 absolute size-12 inset-x-1/2">
+                <Link className="size-min" to="/search"> Search </Link>
+                <Link className="size-min" to="/about"> About </Link>
+                </div>
+          </div>
+          </div>
           <Scripts />
+          <LiveReload />
         </body>
       </html>
     );
