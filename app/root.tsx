@@ -40,10 +40,10 @@ export const meta: MetaFunction = () => {
             <Outlet />
           </div>
           <div className="relative bg-zinc-800 text-white w-screen bottom-0 h-12 p-0 m-0">
-            <div className="columns-2 absolute size-12 inset-x-1/2">
-                <Link className="size-min" to="/search"> Search </Link>
-                <Link className="size-min" to="/about"> About </Link>
-                </div>
+            <div className="flex absolute size-12 inset-x-1/2">
+                <Link className="size-min pr-4" to="/search">Search</Link>
+                <Link className=" size-min pl-4" to="/about">About</Link>
+            </div>
           </div>
           </div>
           <Scripts />
