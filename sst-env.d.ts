@@ -7,6 +7,14 @@ declare module "sst" {
       type: "sst.aws.Remix"
       url: string
     }
+    OpenAIKey: {
+      type: "sst.sst.Secret"
+      value: string
+    }
+    PineConeKey: {
+      type: "sst.sst.Secret"
+      value: string
+    }
   }
 }
 export {}

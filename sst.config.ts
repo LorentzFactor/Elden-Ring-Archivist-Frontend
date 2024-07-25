@@ -9,6 +9,10 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Remix("MyWeb");
+    const pineconeKey = new sst.Secret("PineConeKey");
+    const openaiKey = new sst.Secret("OpenAIKey");
+    new sst.aws.Remix("MyWeb", {
+      link: [pineconeKey, openaiKey],
+    });
   },
 });

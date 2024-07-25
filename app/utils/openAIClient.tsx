@@ -1,7 +1,8 @@
 import OpenAI from 'openai';
+import { Resource } from 'sst';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
+  apiKey: Resource.OpenAIKey.value,
 });
 
 export default openai
