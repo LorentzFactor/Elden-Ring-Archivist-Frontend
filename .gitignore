@@ -135,3 +135,6 @@ build/server
 
 # sst
 .sst
+
+# Ignore package-lock.json
+package-lock.json
