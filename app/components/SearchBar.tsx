@@ -19,7 +19,7 @@ const SearchBar = () => {
           type="text" 
           name="q"
           className="w-full p-2.5 pr-20 px-5 text-lg border-2 border-gray-300 rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:border-blue-500 focus:shadow-md"
-          placeholder="Ask your lore question..."
+          placeholder="Ask your Elden Ring lore question..."
           autoComplete="off"
           value={searchTerm} 
           onChange={handleChange}
