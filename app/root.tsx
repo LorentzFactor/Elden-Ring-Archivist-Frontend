@@ -50,7 +50,6 @@ export const meta: MetaFunction = () => {
             </div>
           </div>
           <Scripts />
-          <LiveReload />
         </body>
       </html>
     );
