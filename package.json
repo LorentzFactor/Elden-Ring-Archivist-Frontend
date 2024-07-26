@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@pinecone-database/pinecone": "^3.0.0",
     "@remix-run/express": "^2.10.3",
     "@remix-run/node": "^2.10.3",
