@@ -1,8 +1,9 @@
-import React from 'react';
+import { React, Suspense} from 'react';
 import { useLoaderData } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
 import openai from '../utils/openAIClient';
 import { redirect } from '@remix-run/node';
+import SearchResultsContainer from '../components/SearchResultsTable';
 
 type SearchResult = {
   id: string,
@@ -54,26 +55,7 @@ const SearchResult = () => {
     
       return (
         <div className="container mx-auto">
-          <div className="bg-white shadow-md rounded-lg overflow-hidden mb-10">
-            <table className="min-w-full bg-white divide-solid">
-              <thead className="bg-sky-600 text-white">
-                <tr>
-                  {headers.map((header) => (
-                    <th className="w-1/3 py-3 px-4 uppercase font-semibold text-sm" key={header}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="bg-gray-100 text-gray-700">
-                {data.map((row, index) => (
-                  <tr className="border-b" key={index} id={row.id}>
-                    {headers.map((header) => (
-                      <td className="w-1/3 py-3 px-4" key={header}>{row[header]}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <SearchResultsContainer data={data}/>
         </div>
       ); 
 };
