@@ -9,6 +9,7 @@ const SearchBar = () => {
   console.log(load_data)
 
   const handleChange = (e) => {
+    e.preventDefault();
     setSearchTerm(e.target.value);
   };
 
