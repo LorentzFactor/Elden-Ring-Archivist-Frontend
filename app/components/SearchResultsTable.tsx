@@ -24,20 +24,20 @@ const SearchResult = ({ item_data }: { item_data: ItemData }) => {
 
     return (
         <div onClick={toggleExpand}
-        className={`border border-zinc-300 shadow-lg rounded-lg px-2 py-0 my-0
+        className={`border-2 border-zinc-300 hover:border-sky-500 rounded-lg px-2 py-0 my-0 bg-white text-zinc-800
         transition-transform transform hover:scale-y-105 overflow-hidden text-ellipsis whitespace-wrap ${expanded ? '' : 'line-clamp-2'}`}>
           <div className="justify-self-auto items-center py-0 pl-0 pr-2 inline-flex">
             <FontAwesomeIcon
                 icon={expanded ? faMinus : faPlus}
-                className="cursor-pointer text-zinc-600 px-1"
+                className="cursor-pointer text-sky-800 px-1"
             />
-            <span className="font-bold text-xl text-zinc-800">{item_data.Name}</span>
+            <span className="font-bold text-xl text-sky-800">{item_data.Name}</span>
             <span className="text-lg text-zinc-500 ml-2">{item_data.item_type}</span>
           </div>
-          <span className={`text-gray-600`}>
+          <span className={`text-zinc-800`}>
             {item_data.Caption}
           </span>
-              <div className="mt-2 text-gray-700">
+              <div className="mt-2">
                   {item_data.Info && <div className="mt-1">Info: {item_data.Info}</div>}
                   {item_data.Info2 && <div className="mt-1">Info2: {item_data.Info2}</div>}
                   {item_data.Effect && <div className="mt-1">Effect: {item_data.Effect}</div>}
@@ -57,7 +57,7 @@ const SearchResultsContainer = ({ data }: SearchResultsContainerProps) => {
     }
 
     return (
-        <div className="container mx-auto grid grid-cols-1 gap-4 w-3/4 bg-gray-100 px-4 m-1 rounded-lg">
+        <div className="container drop-shadow-xl mx-auto grid grid-cols-1 gap-y-1.5 w-3/4 bg-zinc-300 p-3 rounded-lg">
             {data.map((row: ItemData, index: number) => (
                 <SearchResult key={index} item_data={row} />
             ))}
