@@ -14,7 +14,7 @@ type SearchResult = {
 
 const preamble_string="Answer the following question about the lore of the game Elden Ring, using information provided from a data dump of the game's item text.\nPay particular attention to the Caption field, if there is one, as this often contains the most lore.\n\nQuestion:\n"
 
-export const loader = async ({ params }) => {
+export const loader = async ({ request }) => {
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('q');
   console.log(searchTerm);
