@@ -34,11 +34,9 @@ export const meta: MetaFunction = () => {
           <Links />
         </head>
         <body className="overscroll-contain">
-          <header className="sticky top-0 bg-zinc-800 text-white p-4 shadow-md w-full z-50 flex flex-row items-center justify-left space-x-4">
+          <header className="sticky top-0 bg-zinc-800 p-4 shadow-md w-full z-50 flex flex-row items-center justify-left space-x-4">
             <img src={bannerimage} alt="The Silver Tear Banner" className="max-h-20" />
-            <h1 className="text-4xl font-bold">
-              The Silver Tear
-            </h1>
+            <Link prefetch="render" to="/search" className="text-4xl font-bold bg-transparent text-white hover:text-zinc-200 transition-transform hover:scale-105">The Silver Tear</Link>
           </header>
           <div className="static min-h-screen">
             <Outlet />
