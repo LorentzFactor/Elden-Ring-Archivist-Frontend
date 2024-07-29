@@ -4,9 +4,6 @@ import { Form, useLoaderData, useActionData } from "@remix-run/react";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const load_data = useLoaderData()
-  console.log("loader data:")
-  console.log(load_data)
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
