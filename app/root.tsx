@@ -36,7 +36,7 @@ export const meta: MetaFunction = () => {
         <body className="overscroll-contain">
           <header className="sticky top-0 bg-zinc-800 p-4 shadow-md w-full z-50 flex flex-row items-center justify-left space-x-4">
             <img src={bannerimage} alt="The Silver Tear Banner" className="max-h-20" />
-            <Link prefetch="render" className="text-4xl font-bold bg-transparent text-white hover:text-zinc-200 transition-transform hover:scale-105">The Silver Tear</Link>
+            <Link prefetch="render" to="/search" className="text-4xl font-bold bg-transparent text-white hover:text-zinc-200 transition-transform hover:scale-105">The Silver Tear</Link>
           </header>
           <div className="static min-h-screen">
             <Outlet />
