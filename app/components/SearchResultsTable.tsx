@@ -24,22 +24,22 @@ const SearchResult = ({ item_data }: { item_data: ItemData }) => {
 
     return (
         <div onClick={toggleExpand}
-        className={`border-2 border-zinc-300 hover:border-sky-500 rounded-lg px-2 py-0 my-0 bg-white text-zinc-800
-        transition-transform transform hover:scale-y-105 overflow-hidden text-ellipsis whitespace-wrap ${expanded ? '' : 'line-clamp-2'}`}>
+        className={`border-2 border-zinc-300 hover:border-sky-500 rounded-lg px-2 py-0 my-0 bg-white text-zinc-800 text-lg
+        transition-transform transform hover:scale-y-105 overflow-hidden text-ellipsis whitespace-wrap ${expanded ? '' : 'line-clamp-3'}`}>
           <div className="justify-self-auto items-center py-0 pl-0 pr-2 inline-flex">
             <FontAwesomeIcon
                 icon={expanded ? faMinus : faPlus}
                 className="cursor-pointer text-sky-800 px-1"
             />
-            <span className="font-bold text-xl text-sky-800">{item_data.Name}</span>
-            <span className="text-lg text-zinc-500 ml-2">{item_data.item_type}</span>
+            <span className="font-bold text-2xl text-sky-800">{item_data.Name}</span>
+            <span className="text-xl text-sky-500 ml-2">{item_data.item_type}</span>
           </div>
           <span className={`text-zinc-800`}>
             {item_data.Caption}
           </span>
               <div className="mt-2">
                   {item_data.Info && <div className="mt-1">Info: {item_data.Info}</div>}
-                  {item_data.Info2 && <div className="mt-1">Info2: {item_data.Info2}</div>}
+                  {item_data.Info2 && <div className="mt-1">Secondary Info: {item_data.Info2}</div>}
                   {item_data.Effect && <div className="mt-1">Effect: {item_data.Effect}</div>}
                   {item_data.Dialog && <div className="mt-1">Dialog: {item_data.Dialog}</div>}
               </div>
