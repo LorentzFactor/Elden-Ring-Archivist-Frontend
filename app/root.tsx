@@ -22,7 +22,6 @@ export const meta: MetaFunction = () => {
   return [
     { title: "The Silver Tear" },
     { content: "Find in-game items that answer your Elden Ring lore questions"},
-    { charSet: "UTF-8"}
   ]
 }
   
@@ -31,6 +30,7 @@ export const meta: MetaFunction = () => {
       <html>
         <head>
           <meta name="google-site-verification" content="ntWWyoqDy-ijf2kcjbyXr_IFNfD86KOSxzoFvBwgrJY" />
+          <meta charSet="utf-8" />
           <Meta />
           <Links />
         </head>
