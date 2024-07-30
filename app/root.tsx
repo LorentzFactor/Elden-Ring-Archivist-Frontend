@@ -11,7 +11,7 @@ import {
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import stylesheet from "./tailwind.css?url";
 import favicon from "./assets/favicon.ico";
-import bannerimage from "./assets/silver_tear.png";
+import bannerimage from "./assets/silver_tear.webp";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
