@@ -52,7 +52,9 @@ export const loader = async ({ request }) => {
 
 function LoadingResults() {
   return (
-    <FontAwesomeIcon icon={faSpinner} className="text-center text-zinc-500 h-20 w-20 mx-auto animate-spin object-center"/>
+    <div class="flex h-screen justify-center">
+      <FontAwesomeIcon icon={faSpinner} className="text-center text-zinc-500 h-20 w-20 mx-auto animate-spin object-center"/>
+    </div>
   )
 }
 
@@ -62,13 +64,11 @@ const SearchResult = () => {
     console.log("loading new data")
     
       return (
-        <div class="flex h-screen justify-center">
           <Suspense fallback={<LoadingResults />}>
             <Await resolve={data}>
               {(data)=> (nav.state === "idle") ? <SearchResultsContainer data={data}/> : <LoadingResults />}
             </Await>
           </Suspense>
-        </div>
       ); 
 };
 
