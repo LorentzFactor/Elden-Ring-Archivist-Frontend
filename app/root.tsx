@@ -50,6 +50,7 @@ export const meta: MetaFunction = () => {
           </div>
           <Scripts />
           <ScrollRestoration />
+          <LiveReload />
         </body>
       </html>
     );
