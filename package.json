@@ -20,7 +20,7 @@
     "@remix-run/node": "^2.10.3",
     "@remix-run/react": "^2.10.3",
     "@remix-run/serve": "^2.10.3",
-    "compress-brotli": "^1.3.12",
+    "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
     "isbot": "^4.4.0",

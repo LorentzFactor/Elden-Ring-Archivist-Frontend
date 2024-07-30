@@ -1,5 +1,6 @@
 import { createRequestHandler } from "@remix-run/express";
 import express from "express";
+import compression from "compression";
 
 const viteDevServer =
   process.env.NODE_ENV === "production"
@@ -11,6 +12,7 @@ const viteDevServer =
       );
 
 const app = express();
+app.use(compression());
 app.use(
   viteDevServer
     ? viteDevServer.middlewares
