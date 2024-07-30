@@ -30,6 +30,7 @@ export const meta: MetaFunction = () => {
     return (
       <html>
         <head>
+          <meta name="google-site-verification" content="ntWWyoqDy-ijf2kcjbyXr_IFNfD86KOSxzoFvBwgrJY" />
           <Meta />
           <Links />
         </head>
