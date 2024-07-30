@@ -52,7 +52,7 @@ export const loader = async ({ request }) => {
 
 function LoadingResults() {
   return (
-    <div class="flex h-screen justify-center">
+    <div className="flex h-screen justify-center">
       <FontAwesomeIcon icon={faSpinner} className="text-center text-zinc-500 h-20 w-20 mx-auto animate-spin object-center"/>
     </div>
   )
