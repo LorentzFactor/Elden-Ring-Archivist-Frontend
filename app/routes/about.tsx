@@ -1,5 +1,14 @@
 import React from 'react';
 import GitHubLink from '../components/GitHubLink';
+import { MetaFunction } from '@remix-run/react';
+
+export const meta: MetaFunction = () => {
+    return [
+      { title: "About" },
+      { content: "About The Silver Tear"}
+    ]
+  }
+
 
 const About = () => {
     return (
