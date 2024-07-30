@@ -1,5 +1,5 @@
 import { React, Suspense} from 'react';
-import { Await, useLoaderData } from '@remix-run/react';
+import { Await, useLoaderData, useNavigation } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
 import openai from '../utils/openAIClient';
 import { redirect, defer } from '@remix-run/node';
@@ -47,24 +47,25 @@ export const loader = async ({ request }) => {
     return data;
   });
 
-  return defer({'data': data_promise});
+  return defer({data: data_promise});
 };
 
 function LoadingResults() {
   return (
-    <FontAwesomeIcon icon={faSpinner} className="text-center text-zinc-500 h-20 w-20 mx-auto animate-spin"/>
+    <FontAwesomeIcon icon={faSpinner} className="text-center text-zinc-500 h-20 w-20 mx-auto animate-spin object-center"/>
   )
 }
 
 const SearchResult = () => {
-    const { data } = useLoaderData<typeof loader>();
+    let { data } = useLoaderData<typeof loader>();
+    let nav  = useNavigation();
     console.log("loading new data")
     
       return (
-        <div className="container mx-auto">
+        <div class="flex h-screen justify-center">
           <Suspense fallback={<LoadingResults />}>
             <Await resolve={data}>
-              {(data)=> <SearchResultsContainer data={data}/>}
+              {(data)=> (nav.state === "idle") ? <SearchResultsContainer data={data}/> : <LoadingResults />}
             </Await>
           </Suspense>
         </div>
