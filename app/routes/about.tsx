@@ -1,4 +1,13 @@
 import React from 'react';
+import { MetaFunction } from '@remix-run/react';
+
+export const meta: MetaFunction = () => {
+    return [
+      { title: "About" },
+      { content: "About The Silver Tear"},
+      { charSet: "UTF-8"}
+    ]
+  }
 
 const About = () => {
     return (
