@@ -34,6 +34,13 @@ export const meta: MetaFunction = () => {
           <meta charSet="utf-8" />
           <Meta />
           <Links />
+          <script 
+            dangerouslySetInnerHTML={{__html:`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-LH21TD322X');
+          `}}></script>
         </head>
         <body className="overscroll-contain">
           <header className="sticky top-0 bg-zinc-800 p-4 shadow-md w-full z-50 flex flex-row items-center space-x-4">
