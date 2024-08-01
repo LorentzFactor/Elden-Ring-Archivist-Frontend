@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar';
 export const meta: MetaFunction = () => {
   return [
     { title: "The Silver Tear" },
-    { name: "description", content: "Find in-game items that answer your Elden Ring lore questions"}
+    { name: "description", content: "A search engine that answers questions about Elden Ring lore (e.g. What is the primeval current) by finding relevant in-game items"}
   ]
 }
 
