@@ -11,7 +11,7 @@ import {
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import stylesheet from "./tailwind.css?url";
 import favicon from "./assets/favicon.ico";
-import bannerimage from "./assets/silver_tear.png";
+import bannerimage from "./assets/silver_tear.webp";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -21,7 +21,7 @@ export const links: LinksFunction = () => [
 export const meta: MetaFunction = () => {
   return [
     { title: "The Silver Tear" },
-    { content: "Find in-game items that answer your Elden Ring lore questions"},
+    { name: "description", content: "A search engine that answers questions about Elden Ring lore (e.g. What is the primeval current) by finding relevant in-game items"},
   ]
 }
   

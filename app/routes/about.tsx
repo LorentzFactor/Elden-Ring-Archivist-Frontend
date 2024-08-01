@@ -4,8 +4,11 @@ import { MetaFunction } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
     return [
-      { title: "About" },
-      { content: "About The Silver Tear"}
+        { title: "About" },
+        { 
+            name: "description",
+            content: "About The Silver Tear"
+        }
     ]
   }
 
