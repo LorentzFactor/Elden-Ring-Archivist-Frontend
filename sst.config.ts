@@ -11,6 +11,8 @@ export default $config({
   async run() {
     const pineconeKey = new sst.Secret("PineConeKey");
     const openaiKey = new sst.Secret("OpenAIKey");
+    const redisKey = new sst.Secret("RedisKey");
+    const redisUser = new sst.Secret("RedisUser");
     new sst.aws.Remix("MyWeb", {
       domain: "the-silver-tear.com",
       link: [pineconeKey, openaiKey],
