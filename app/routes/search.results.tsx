@@ -54,8 +54,6 @@ export const loader = async ({
   if (!searchTerm) {
     throw redirect('/search')
   }
-
-  recordSearch(request, searchTerm);
   
   const embedding_response_promise = openai.embeddings.create({
     model: "text-embedding-3-large",
