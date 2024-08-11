@@ -9,11 +9,17 @@ export default $config({
     };
   },
   async run() {
+    // initialize secrets for connecting to external services
     const pineconeKey = new sst.Secret("PineConeKey");
     const openaiKey = new sst.Secret("OpenAIKey");
+    const redisKey = new sst.Secret("RedisKey");
+    const redisUser = new sst.Secret("RedisUser");
+    const redisUrl = new sst.Secret("RedisUrl");
+    const redisPort = new sst.Secret("RedisPort");
+
     new sst.aws.Remix("MyWeb", {
       domain: "the-silver-tear.com",
-      link: [pineconeKey, openaiKey],
+      link: [pineconeKey, openaiKey, redisKey, redisUser, redisUrl, redisPort],
     });
   },
 });
