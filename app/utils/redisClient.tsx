@@ -1,13 +1,17 @@
 import { createClient } from 'redis';
 import { Resource } from 'sst';
 
-const redisClient = createClient({
-    password: Resource.RedisKey.value,
-    username: Resource.RedisUser.value,
-    socket: {
-        host: Resource.RedisUrl.value,
-        port: parseInt(Resource.RedisPort.value)
-    }
-});
+const createRedisClient = async () => {
+    let client = createClient({
+        password: Resource.RedisKey.value,
+        username: Resource.RedisUser.value,
+        socket: {
+            host: Resource.RedisUrl.value,
+            port: parseInt(Resource.RedisPort.value)
+        }
+    })
+    await client.connect();
+    return client;
+};
 
-export default redisClient;
+export default createRedisClient;

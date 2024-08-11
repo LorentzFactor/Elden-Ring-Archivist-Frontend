@@ -2,7 +2,9 @@ import { React, Suspense} from 'react';
 import { Await, useLoaderData, useNavigation } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
 import openai from '../utils/openAIClient';
-import { redirect, defer } from '@remix-run/node';
+import createRedisClient from '../utils/redisClient';
+import getIP from '../utils/getRequestIp';
+import { redirect, defer, LoaderFunctionArgs } from '@remix-run/node';
 import SearchResultsContainer from '../components/SearchResultsTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -14,13 +16,46 @@ type SearchResult = {
 
 const preamble_string="Answer the following question about the lore of the game Elden Ring, using information provided from a data dump of the game's item text.\nPay particular attention to the Caption field, if there is one, as this often contains the most lore.\n\nQuestion:\n"
 
-export const loader = async ({ request }) => {
+async function recordSearch(request: Request, searchTerm: string) {
+  let ip = getIP(request);
+  let userAgent = request.headers.get("User-Agent");
+  let redisClient = await createRedisClient();
+
+  // record the search term and ip address
+  try {
+    if (ip === null) {
+      ip = "unknown";
+    } else {
+      await redisClient.SADD("known_ips", ip);
+      await redisClient.SADD("searches:by_ip:" + ip, searchTerm);
+    }
+    if (userAgent === null) {
+      userAgent = "unknown";
+    }
+    await redisClient.xAdd("searches", '*', {
+      ip: ip,
+      user_agent: userAgent,
+      search_term: searchTerm
+    })
+  }
+  catch (error) {
+    console.error(error);
+  }
+  finally {
+    await redisClient.disconnect();
+  }
+};
+
+export const loader = async ({
+  request,
+}: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('q');
-  console.log(searchTerm);
   if (!searchTerm) {
     throw redirect('/search')
   }
+
+  recordSearch(request, searchTerm);
   
   const embedding_response_promise = openai.embeddings.create({
     model: "text-embedding-3-large",
@@ -46,6 +81,8 @@ export const loader = async ({ request }) => {
     };
     return data;
   });
+
+ recordSearch(request, searchTerm);
 
   return defer({data: data_promise});
 };
