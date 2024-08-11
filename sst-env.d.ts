@@ -19,6 +19,14 @@ declare module "sst" {
       type: "sst.sst.Secret"
       value: string
     }
+    RedisPort: {
+      type: "sst.sst.Secret"
+      value: string
+    }
+    RedisUrl: {
+      type: "sst.sst.Secret"
+      value: string
+    }
     RedisUser: {
       type: "sst.sst.Secret"
       value: string
