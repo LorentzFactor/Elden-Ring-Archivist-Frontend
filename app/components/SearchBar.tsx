@@ -1,6 +1,6 @@
 // app/components/SearchBar.jsx
 import React, { useState } from 'react';
-import { Form, useLoaderData, useActionData } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
