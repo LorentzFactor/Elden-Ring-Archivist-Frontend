@@ -48,12 +48,10 @@ async function recordSearch(request: Request, searchTerm: string) {
 
 export const loader = async ({
   request,
+  params
 }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const searchTerm = url.searchParams.get('q');
-  if (!searchTerm) {
-    throw redirect('/search')
-  }
+  const searchTerm = params.search_term!;
   
   const embedding_response_promise = openai.embeddings.create({
     model: "text-embedding-3-large",
