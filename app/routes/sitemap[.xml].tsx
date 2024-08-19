@@ -22,12 +22,12 @@ export let loader: LoaderFunction = async () => {
   const urlsAsXml = await searchToXMLSiteMap();
   const sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
-        <loc>https://the-silver-tear.com/search/</loc>
+        <loc>https://the-silver-tear.com/search</loc>
         <lastmod>2024-08-01</lastmod>
         <priority>1.0</priority>
       </url>
       <url>
-        <loc>https://the-silver-tear.com/about/</loc>
+        <loc>https://the-silver-tear.com/about</loc>
         <lastmod>2024-08-01</lastmod>
         <priority>0.8</priority>
       </url>
