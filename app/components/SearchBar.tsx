@@ -1,6 +1,6 @@
 // app/components/SearchBar.jsx
 import React, { useState } from 'react';
-import { Form, useLoaderData, useActionData } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,7 +12,7 @@ const SearchBar = () => {
 
   return (
     <div className="relative w-full max-w-md mx-auto p-2.5">
-      <Form method="get" action="/search/results">
+      <Form method="post" action="/search">
         <input 
           type="text" 
           name="q"

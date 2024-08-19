@@ -4,10 +4,10 @@ import { MetaFunction } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "About" },
+        { title: "The Silver Tear - About" },
         { 
             name: "description",
-            content: "About The Silver Tear"
+            content: "About The Silver Tear, an Elden lore search engine"
         }
     ]
   }
