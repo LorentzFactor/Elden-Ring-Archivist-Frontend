@@ -20,7 +20,7 @@ export const links: LinksFunction = () => [
 
   export default function App() {
     return (
-      <html>
+      <html lang="en">
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="google-site-verification" content="ntWWyoqDy-ijf2kcjbyXr_IFNfD86KOSxzoFvBwgrJY" />
