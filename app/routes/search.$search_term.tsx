@@ -1,18 +1,14 @@
 import { React, Suspense} from 'react';
-import { Await, useLoaderData, useNavigation } from '@remix-run/react';
+import { Await, useLoaderData, useNavigation, MetaFunction } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
 import openai from '../utils/openAIClient';
 import createRedisClient from '../utils/redisClient';
 import getIP from '../utils/getRequestIp';
+import replaceAll from '../utils/strReplaceAll';
 import { redirect, defer, LoaderFunctionArgs } from '@remix-run/node';
 import SearchResultsContainer from '../components/SearchResultsTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
-type SearchResult = {
-  id: string,
-  name: string|null
-}
 
 const preamble_string="Answer the following question about the lore of the game Elden Ring, using information provided from a data dump of the game's item text.\nPay particular attention to the Caption field, if there is one, as this often contains the most lore.\n\nQuestion:\n"
 
@@ -50,7 +46,6 @@ export const loader = async ({
   request,
   params
 }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
   const searchTerm = params.search_term!;
   
   const embedding_response_promise = openai.embeddings.create({
@@ -80,8 +75,15 @@ export const loader = async ({
 
  recordSearch(request, searchTerm);
 
-  return defer({data: data_promise});
+  return defer({data: data_promise, searchTerm: searchTerm});
 };
+
+// Construct the meta title and description from the search term
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    { title: `The Silver Tear - ${replaceAll(decodeURIComponent(data!.searchTerm), '+', ' ')}` }
+  ]
+}
 
 function LoadingResults() {
   return (
@@ -94,7 +96,6 @@ function LoadingResults() {
 const SearchResult = () => {
     let { data } = useLoaderData<typeof loader>();
     let nav  = useNavigation();
-    console.log("loading new data")
     
       return (
           <Suspense fallback={<LoadingResults />}>
