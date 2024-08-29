@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, MetaFunction } from '@remix-run/react';
+import { Outlet, MetaFunction, useMatches } from '@remix-run/react';
 import { redirect, ActionFunctionArgs } from '@remix-run/node';
 import SearchBar from '../components/SearchBar';
 
@@ -19,9 +19,11 @@ export async function action({
 }
 
 const Search = () => {
+  const matches = useMatches();
+  const search_url_param = matches.find(match => match.id === 'routes/search.$search_term')?.params.search_term || '';
   return (
     <div>
-      <SearchBar/>
+      <SearchBar textInput={search_url_param}/>
       <Outlet/>
     </div>
   );
