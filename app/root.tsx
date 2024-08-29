@@ -8,7 +8,7 @@ import {
     LiveReload,
     ScrollRestoration
   } from "@remix-run/react";
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/node";
 import stylesheet from "./tailwind.css?url";
 import favicon from "./assets/favicon.ico";
 import bannerimage from "./assets/silver_tear.webp";
