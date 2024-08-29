@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { Form } from "@remix-run/react";
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchBar = ({textInput = ''}) => {
+  const [searchTerm, setSearchTerm] = useState(textInput);
 
   const handleChange = (e) => {
     e.preventDefault();
