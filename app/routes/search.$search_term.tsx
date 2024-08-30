@@ -5,7 +5,7 @@ import openai from '../utils/openAIClient';
 import createRedisClient from '../utils/redisClient';
 import getIP from '../utils/getRequestIp';
 import replaceAll from '../utils/strReplaceAll';
-import { redirect, defer, LoaderFunctionArgs } from '@remix-run/node';
+import { defer, LoaderFunctionArgs } from '@remix-run/node';
 import SearchResultsContainer from '../components/SearchResultsTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';

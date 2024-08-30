@@ -58,8 +58,8 @@ const SearchResultsContainer = ({ data }: SearchResultsContainerProps) => {
 
     return (
         <div className="container drop-shadow-xl mx-auto grid grid-cols-1 gap-y-1.5 w-3/4 bg-zinc-300 p-3 rounded-lg">
-            {data.map((row: ItemData, index: number) => (
-                <SearchResult key={index} item_data={row} />
+            {data.map((row: ItemData) => (
+                <SearchResult item_data={row} />
             ))}
         </div>
     );

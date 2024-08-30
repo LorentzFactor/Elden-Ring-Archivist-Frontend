@@ -1,4 +1,3 @@
-import { json } from "@remix-run/node";
 import { LoaderFunction } from "@remix-run/node";
 import createRedisClient from '../utils/redisClient';
 
