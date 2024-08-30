@@ -10,7 +10,8 @@ import SearchResultsContainer from '../components/SearchResultsTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-const preamble_string="Answer the following question about the lore of the game Elden Ring, using information provided from a data dump of the game's item text.\nPay particular attention to the Caption field, if there is one, as this often contains the most lore.\n\nQuestion:\n"
+const preamble_string='';
+const namespace = 'raw_text';
 
 async function recordSearch(request: Request, searchTerm: string) {
   let ip = getIP(request);
@@ -56,11 +57,14 @@ export const loader = async ({
 
   const query_vec_promise = embedding_response_promise.then((embedding_response) => {return embedding_response.data[0].embedding});
   
-  const data_matches_promise = query_vec_promise.then((query_vec)=> {return default_index.query({
+  const data_matches_promise = query_vec_promise.then((query_vec)=> {return default_index.namespace(namespace).query({
     vector: query_vec, 
     topK: 10,
     filter: { $and:[{"Name": {$exists: true}}, {"Caption": {$exists: true}}] },
-    includeMetadata: true
+    includeMetadata: true,
+    includeValues: false,
+
+
   })});
 
   const data_promise = data_matches_promise.then((data_matches) => {
