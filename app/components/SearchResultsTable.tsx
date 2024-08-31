@@ -29,7 +29,7 @@ const SearchResult = ({ item_data }: { item_data: ItemData }) => {
           <div className="justify-self-auto items-center py-0 pl-0 pr-2 inline-flex">
             <FontAwesomeIcon
                 icon={expanded ? faMinus : faPlus}
-                className="cursor-pointer text-sky-800 px-1"
+                className="cursor-pointer text-2xl text-sky-800 px-1"
             />
             <span className="font-bold text-2xl text-sky-800">{item_data.Name}</span>
             <span className="text-xl text-sky-500 ml-2">{item_data.item_type}</span>
