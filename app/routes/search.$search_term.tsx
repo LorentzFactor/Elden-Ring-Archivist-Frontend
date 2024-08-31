@@ -43,41 +43,40 @@ async function recordSearch(request: Request, searchTerm: string) {
   }
 };
 
-export const loader = async ({
-  request,
-  params
-}: LoaderFunctionArgs) => {
-  const searchTerm = params.search_term!;
-  
-  const embedding_response_promise = openai.embeddings.create({
+async function getRelevantLoreItems(searchTerm: string) {
+  const embedding_response = await openai.embeddings.create({
     model: "text-embedding-3-large",
     input: preamble_string + searchTerm,
     encoding_format: "float",
   });
 
-  const query_vec_promise = embedding_response_promise.then((embedding_response) => {return embedding_response.data[0].embedding});
-  
-  const data_matches_promise = query_vec_promise.then((query_vec)=> {return default_index.namespace(namespace).query({
+  const query_vec = embedding_response.data[0].embedding;
+
+  const data_matches = await default_index.namespace(namespace).query({
     vector: query_vec, 
-    topK: 10,
+    topK: 50,
     filter: { $and:[{"Name": {$exists: true}}, {"Caption": {$exists: true}}] },
     includeMetadata: true,
     includeValues: false,
-
-
-  })});
-
-  const data_promise = data_matches_promise.then((data_matches) => {
-    let data: any[] = [];
-    for (let match of data_matches.matches) {
-      let item_data = match.metadata!;
-      item_data.id = match.id;
-      data.push(item_data);
-    };
-    return data;
   });
 
- recordSearch(request, searchTerm);
+  let data: any[] = [];
+  for (let match of data_matches.matches) {
+    let item_data = match.metadata!;
+    item_data.id = match.id;
+    data.push(item_data);
+  };
+
+  return data;
+}
+
+export const loader = async ({
+  request,
+  params
+}: LoaderFunctionArgs) => {
+  const searchTerm = params.search_term!;
+  const data_promise = getRelevantLoreItems(searchTerm);
+  recordSearch(request, searchTerm);
 
   return defer({data: data_promise, searchTerm: searchTerm});
 };
@@ -102,11 +101,13 @@ const SearchResult = () => {
     let nav  = useNavigation();
     
       return (
-          <Suspense fallback={<LoadingResults />}>
-            <Await resolve={data}>
-              {(data)=> (nav.state === "idle") ? <SearchResultsContainer data={data}/> : <LoadingResults />}
-            </Await>
-          </Suspense>
+          <div>
+            <Suspense fallback={<LoadingResults />}>
+              <Await resolve={data}>
+                {(data)=> (nav.state === "idle") ? <SearchResultsContainer data={data}/> : <LoadingResults />}
+              </Await>
+            </Suspense>
+          </div>
       ); 
 };
 
