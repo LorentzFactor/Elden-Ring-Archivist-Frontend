@@ -40,8 +40,8 @@ const SearchResult = ({ item_data }: { item_data: ItemData }) => {
             {item_data.Caption}
           </span>
               <div className="mt-2">
-                  {item_data.Info && <div className="mt-1">Info: {item_data.Info}</div>}
-                  {item_data.Info2 && <div className="mt-1">Secondary Info: {item_data.Info2}</div>}
+                  {item_data.Info && <div className="mt-1">Info (non-cannon): {item_data.Info}</div>}
+                  {item_data.Info2 && <div className="mt-1">Secondary Info (non-cannon): {item_data.Info2}</div>}
                   {item_data.Effect && <div className="mt-1">Effect: {item_data.Effect}</div>}
                   {item_data.Dialog && <div className="mt-1">Dialog: {item_data.Dialog}</div>}
               </div>
