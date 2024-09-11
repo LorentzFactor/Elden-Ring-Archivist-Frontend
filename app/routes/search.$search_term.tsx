@@ -60,9 +60,9 @@ async function getRelevantLoreItems(searchTerm: string) {
     includeValues: false,
   });
 
-  let data: any[] = [];
-  for (let match of data_matches.matches) {
-    let item_data = match.metadata!;
+  const data: RecordMetadata[] = [];
+  for (const match of data_matches.matches) {
+    const item_data = match.metadata!;
     item_data.id = match.id;
     data.push(item_data);
   };
