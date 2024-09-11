@@ -4,15 +4,15 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 type optional_string = string | undefined | null;
 
-type ItemData = {
-    ID: string,
-    Name: string,
-    item_type: string,
-    Caption: optional_string,
-    Info: optional_string,
-    Info2: optional_string,
-    Effect: optional_string,
-    Dialog: optional_string,
+interface ItemData {
+    ID: string;
+    Name: string;
+    item_type: string;
+    Caption: optional_string;
+    Info: optional_string;
+    Info2: optional_string;
+    Effect: optional_string;
+    Dialog: optional_string;
 };
 
 const SearchResult = ({ item_data }: { item_data: ItemData }) => {
