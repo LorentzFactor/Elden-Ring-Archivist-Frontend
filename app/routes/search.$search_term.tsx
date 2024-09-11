@@ -1,4 +1,4 @@
-import { React, Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { Await, useLoaderData, useNavigation, MetaFunction } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
 import openai from '../utils/openAIClient';
@@ -97,8 +97,8 @@ function LoadingResults() {
 }
 
 const SearchResult = () => {
-    let { data } = useLoaderData<typeof loader>();
-    let nav  = useNavigation();
+    const { data } = useLoaderData<typeof loader>();
+    const nav  = useNavigation();
     
       return (
           <div>

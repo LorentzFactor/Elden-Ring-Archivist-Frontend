@@ -17,7 +17,7 @@ const searchToXMLSiteMap = async () => {
   return urlsAsXml;
 }
 
-export let loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async () => {
   const urlsAsXml = await searchToXMLSiteMap();
   const sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
