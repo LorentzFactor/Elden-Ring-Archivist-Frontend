@@ -37,7 +37,7 @@ export const links: LinksFunction = () => [
         </head>
         <body className="overscroll-contain">
           <header className="sticky top-0 bg-zinc-800 p-4 shadow-md w-full z-50 flex flex-row items-center space-x-4">
-            <img src={bannerimage} alt="The Silver Tear Banner" className="max-h-20" />
+            <img src={bannerimage} alt="The Silver Tear Banner" height={80} className="max-h-20" />
             <Link prefetch="render" to="/search" className="text-4xl font-bold bg-transparent text-white hover:text-zinc-200 transition-transform hover:scale-105">The Silver Tear</Link>
             <div className="grow place-self-end pb-0 text-right">
               <Link prefetch="hover" to="/about" className=" text-2xl bg-transparent text-violet-400 hover:text-zinc-200 ">About</Link>
