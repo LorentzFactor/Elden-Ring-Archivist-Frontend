@@ -4,15 +4,15 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 type optional_string = string | undefined | null;
 
-type ItemData = {
-    ID: string,
-    Name: string,
-    item_type: string,
-    Caption: optional_string,
-    Info: optional_string,
-    Info2: optional_string,
-    Effect: optional_string,
-    Dialog: optional_string,
+interface ItemData {
+    ID: string;
+    Name: string;
+    item_type: string;
+    Caption: optional_string;
+    Info: optional_string;
+    Info2: optional_string;
+    Effect: optional_string;
+    Dialog: optional_string;
 };
 
 const SearchResult = ({ item_data }: { item_data: ItemData }) => {
@@ -25,12 +25,14 @@ const SearchResult = ({ item_data }: { item_data: ItemData }) => {
     return (
         <div onClick={toggleExpand}
         className={`border-2 border-zinc-300 hover:border-sky-500 rounded-lg px-2 py-0 my-0 bg-white text-zinc-800 text-lg
-        transition-transform transform hover:scale-y-105 overflow-hidden text-ellipsis whitespace-wrap ${expanded ? '' : 'line-clamp-3'}`}>
+        transition-transform transform overflow-hidden text-ellipsis whitespace-wrap ${expanded ? '' : 'line-clamp-3 hover:scale-y-105'}`}>
           <div className="justify-self-auto items-center py-0 pl-0 pr-2 inline-flex">
-            <FontAwesomeIcon
-                icon={expanded ? faMinus : faPlus}
-                className="cursor-pointer text-sky-800 px-1"
-            />
+            <span>
+                <FontAwesomeIcon
+                    icon={expanded ? faMinus : faPlus}
+                    className="cursor-pointer text-2xl text-sky-800 px-1"
+                />
+            </span>
             <span className="font-bold text-2xl text-sky-800">{item_data.Name}</span>
             <span className="text-xl text-sky-500 ml-2">{item_data.item_type}</span>
           </div>
@@ -57,11 +59,13 @@ const SearchResultsContainer = ({ data }: SearchResultsContainerProps) => {
     }
 
     return (
-        <div className="container drop-shadow-xl mx-auto grid grid-cols-1 gap-y-1.5 w-3/4 bg-zinc-300 p-3 rounded-lg">
-            {data.map((row: ItemData, index: number) => (
-                <SearchResult key={index} item_data={row} />
+        <ul className="container drop-shadow-xl mx-auto grid grid-cols-1 gap-y-1.5 w-3/4 bg-zinc-300 p-3 rounded-lg">
+            {data.map((row: ItemData) => (
+                <li key={row.ID}>
+                    <SearchResult item_data={row} />
+                </li>
             ))}
-        </div>
+        </ul>
     );
 };
 

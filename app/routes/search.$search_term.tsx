@@ -1,38 +1,46 @@
-import { React, Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { Await, useLoaderData, useNavigation, MetaFunction } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
+import { RecordMetadata } from '@pinecone-database/pinecone';
 import openai from '../utils/openAIClient';
 import createRedisClient from '../utils/redisClient';
 import getIP from '../utils/getRequestIp';
 import replaceAll from '../utils/strReplaceAll';
-import { redirect, defer, LoaderFunctionArgs } from '@remix-run/node';
+import { defer, LoaderFunctionArgs } from '@remix-run/node';
 import SearchResultsContainer from '../components/SearchResultsTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-const preamble_string="Answer the following question about the lore of the game Elden Ring, using information provided from a data dump of the game's item text.\nPay particular attention to the Caption field, if there is one, as this often contains the most lore.\n\nQuestion:\n"
+const preamble_string='';
+const namespace = 'raw_text';
 
 async function recordSearch(request: Request, searchTerm: string) {
   let ip = getIP(request);
   let userAgent = request.headers.get("User-Agent");
-  let redisClient = await createRedisClient();
+  const redisClient = await createRedisClient();
+  let redis_commands: Promise<number|string>[] = [];
 
   // record the search term and ip address
   try {
     if (ip === null) {
       ip = "unknown";
     } else {
-      await redisClient.SADD("known_ips", ip);
-      await redisClient.SADD("searches:by_ip:" + ip, searchTerm);
+      redis_commands = [
+        redisClient.SADD("known_ips", ip),
+        redisClient.SADD("searches:by_ip:" + ip, searchTerm)
+    ];
     }
     if (userAgent === null) {
       userAgent = "unknown";
     }
-    await redisClient.xAdd("searches", '*', {
+    redis_commands.push(
+      redisClient.xAdd("searches", '*', {
       ip: ip,
       user_agent: userAgent,
       search_term: searchTerm
-    })
+     })
+    );
+    await Promise.all(redis_commands);
   }
   catch (error) {
     console.error(error);
@@ -42,38 +50,40 @@ async function recordSearch(request: Request, searchTerm: string) {
   }
 };
 
-export const loader = async ({
-  request,
-  params
-}: LoaderFunctionArgs) => {
-  const searchTerm = params.search_term!;
-  
-  const embedding_response_promise = openai.embeddings.create({
+async function getRelevantLoreItems(searchTerm: string) {
+  const embedding_response = await openai.embeddings.create({
     model: "text-embedding-3-large",
     input: preamble_string + searchTerm,
     encoding_format: "float",
   });
 
-  const query_vec_promise = embedding_response_promise.then((embedding_response) => {return embedding_response.data[0].embedding});
-  
-  const data_matches_promise = query_vec_promise.then((query_vec)=> {return default_index.query({
-    vector: query_vec, 
-    topK: 10,
-    filter: { $and:[{"Name": {$exists: true}}, {"Caption": {$exists: true}}] },
-    includeMetadata: true
-  })});
+  const query_vec = embedding_response.data[0].embedding;
 
-  const data_promise = data_matches_promise.then((data_matches) => {
-    let data: any[] = [];
-    for (let match of data_matches.matches) {
-      let item_data = match.metadata!;
-      item_data.id = match.id;
-      data.push(item_data);
-    };
-    return data;
+  const data_matches = await default_index.namespace(namespace).query({
+    vector: query_vec, 
+    topK: 50,
+    filter: { $and:[{"Name": {$exists: true}}, {"Caption": {$exists: true}}] },
+    includeMetadata: true,
+    includeValues: false,
   });
 
- recordSearch(request, searchTerm);
+  const data: RecordMetadata[] = [];
+  for (const match of data_matches.matches) {
+    const item_data = match.metadata!;
+    item_data.id = match.id;
+    data.push(item_data);
+  };
+
+  return data;
+}
+
+export const loader = async ({
+  request,
+  params
+}: LoaderFunctionArgs) => {
+  const searchTerm = params.search_term!;
+  const data_promise = getRelevantLoreItems(searchTerm);
+  recordSearch(request, searchTerm);
 
   return defer({data: data_promise, searchTerm: searchTerm});
 };
@@ -94,15 +104,17 @@ function LoadingResults() {
 }
 
 const SearchResult = () => {
-    let { data } = useLoaderData<typeof loader>();
-    let nav  = useNavigation();
+    const { data } = useLoaderData<typeof loader>();
+    const nav  = useNavigation();
     
       return (
-          <Suspense fallback={<LoadingResults />}>
-            <Await resolve={data}>
-              {(data)=> (nav.state === "idle") ? <SearchResultsContainer data={data}/> : <LoadingResults />}
-            </Await>
-          </Suspense>
+          <div>
+            <Suspense fallback={<LoadingResults />}>
+              <Await resolve={data}>
+                {(data)=> (nav.state === "idle") ? <SearchResultsContainer data={data}/> : <LoadingResults />}
+              </Await>
+            </Suspense>
+          </div>
       ); 
 };
 

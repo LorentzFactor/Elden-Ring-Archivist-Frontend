@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import { Form } from "@remix-run/react";
 
-const SearchBar = ({textInput = ''}) => {
+interface SearchBarProps {
+  textInput: string;
+}
+
+const SearchBar = ({textInput}: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState(textInput);
 
   const handleChange = (e) => {
