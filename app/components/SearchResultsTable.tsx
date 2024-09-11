@@ -59,7 +59,7 @@ const SearchResultsContainer = ({ data }: SearchResultsContainerProps) => {
     }
 
     return (
-        <ul className="container drop-shadow-xl mx-auto grid grid-cols-1 gap-y-1.5 w-3/4 bg-zinc-300 p-3 rounded-lg">
+        <ul className="container drop-shadow-xl mx-auto grid grid-cols-1 gap-y-1.5 md:w-3/4 bg-zinc-300 p-3 rounded-lg">
             {data.map((row: ItemData) => (
                 <li key={row.ID}>
                     <SearchResult item_data={row} />
