@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Await, useLoaderData, useNavigation, MetaFunction } from '@remix-run/react';
 import default_index from '../utils/pineconeClient';
+import { RecordMetadata } from '@pinecone-database/pinecone';
 import openai from '../utils/openAIClient';
 import createRedisClient from '../utils/redisClient';
 import getIP from '../utils/getRequestIp';
@@ -16,24 +17,30 @@ const namespace = 'raw_text';
 async function recordSearch(request: Request, searchTerm: string) {
   let ip = getIP(request);
   let userAgent = request.headers.get("User-Agent");
-  let redisClient = await createRedisClient();
+  const redisClient = await createRedisClient();
+  let redis_commands: Promise<number|string>[] = [];
 
   // record the search term and ip address
   try {
     if (ip === null) {
       ip = "unknown";
     } else {
-      await redisClient.SADD("known_ips", ip);
-      await redisClient.SADD("searches:by_ip:" + ip, searchTerm);
+      redis_commands = [
+        redisClient.SADD("known_ips", ip),
+        redisClient.SADD("searches:by_ip:" + ip, searchTerm)
+    ];
     }
     if (userAgent === null) {
       userAgent = "unknown";
     }
-    await redisClient.xAdd("searches", '*', {
+    redis_commands.push(
+      redisClient.xAdd("searches", '*', {
       ip: ip,
       user_agent: userAgent,
       search_term: searchTerm
-    })
+     })
+    );
+    await Promise.all(redis_commands);
   }
   catch (error) {
     console.error(error);
