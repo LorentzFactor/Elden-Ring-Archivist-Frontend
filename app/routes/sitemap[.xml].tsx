@@ -12,7 +12,7 @@ const searchToXMLSiteMap = async () => {
   // url encode each search and conver them to urls
   const urls = searches.map(search => `https://the-silver-tear.com/search/${encodeURIComponent(search)}`);
   // Lastly, convert the urls to an xml block
-  const urlsAsXml= urls.map(url => `<url><loc>${url}</loc><priority>0.5</priority></url>`).join('\n');
+  const urlsAsXml= urls.map(url => `<url><loc>${url}</loc><priority>0.5</priority><lastmod>2024-09-11</lastmod></url>`).join('\n');
 
   return urlsAsXml;
 }
